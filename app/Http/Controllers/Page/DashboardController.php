@@ -180,7 +180,7 @@ class DashboardController extends Controller
 	{
 		try {
 			DB::beginTransaction();
-			DB::table('reminder')->where('id_reminder','1')->update([
+			DB::table('reminder')->where('id','1')->update([
 				'pesan_reminder'=>$request->pesan_reminder
 			]);
 			DB::commit();
