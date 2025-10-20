@@ -105,6 +105,7 @@ class KamarController extends Controller
 			$data -> harga_kamar = $harga_kamar;
 			$data -> jenis_kamar = $request->jenis_kamar;
 			$data -> keterangan_kamar = $request->keterangan_kamar;
+            $data -> status_kamar = 'Belum Terpakai';
 			$data -> created_by = Auth::user()->id;
 			$data -> save();
 
