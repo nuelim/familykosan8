@@ -15,7 +15,7 @@
         <div class="col-12 col-md-6 order-md-2 order-first">
           <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="">Master Data</a></li>
+              <li class="breadcrumb-item"><a href="">Master </a></li>
               <li class="breadcrumb-item active" aria-current="page">Fasilitas</li>
             </ol>
           </nav>
@@ -37,7 +37,7 @@
     <div class="card">
       <div class="card-header">
         <h5 class="card-title mb-0">
-          Data Kamar {!! $label_cabang ? '<strong>(Cabang : ' . $label_cabang->nama_cabang . ')</strong>' : '' !!}
+           Kamar {!! $label_cabang ? '<strong>(Cabang : ' . $label_cabang->nama_cabang . ')</strong>' : '' !!}
           <button type="button" style="float: right;" class="btn btn-sm rounded-pill btn-primary block new" >
             <i class="bx bx-plus"></i> Tambah Kamar
           </button>
@@ -48,15 +48,15 @@
           <table class="table table-striped nowrap dt-responsive" id="table_kamar" style="width: 100%;">
             <thead>
               <tr>
-                <th data-priority="2">No. </th>
-                <th data-priority="3">Cabang</th>
-                <th data-priority="4">Nomor Kamar</th>
-                <th data-priority="5">Tarif per Bulan</th>
-                <th data-priority="6">Jenis</th>
-                <th data-priority="7">Jumlah Fasilitas</th>
-                <th data-priority="8">Status Kamar</th>
-                <th data-priority="9">Keterangan Kamar</th>
-                <th data-priority="1">Action</th>
+                <th -priority="2">No. </th>
+                <th -priority="3">Cabang</th>
+                <th -priority="4">Nomor Kamar</th>
+                <th -priority="5">Tarif per Bulan</th>
+                <th -priority="6">Jenis</th>
+                <th -priority="7">Jumlah Fasilitas</th>
+                <th -priority="8">Status Kamar</th>
+                <th -priority="9">Keterangan Kamar</th>
+                <th -priority="1">Action</th>
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -163,7 +163,7 @@
   var keyword = "{{request()->has('keyword') ? request()->input('keyword') : null}}";
   function KamarTable(keyword=null,access=null) {
   // $(function () {
-    $('#table_kamar').DataTable({
+    $('#table_kamar').Table({
       processing: true,
       pageLength: 10,
       responsive: true,
@@ -171,7 +171,7 @@
       responsive: true,
       ajax: {
         url: "{{ route('index.kamar') }}",
-        data: {access: access, keyword: keyword},
+        : {access: access, status_kamar: keyword},
         error: function (jqXHR, textStatus, errorThrown) {
           $('#table_kamar').DataTable().ajax.reload();
         }
