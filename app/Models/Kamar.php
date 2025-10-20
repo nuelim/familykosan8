@@ -14,13 +14,39 @@ class Kamar extends Model
 	protected $table = "kamar";
 	protected $primaryKey = "id_kamar";
 
-	public static function getKamar()
-{
-    // Hanya mengambil data dari tabel kamar dan join ke cabang untuk nama
-    $data = Kamar::join('cabang','cabang.id_cabang','=','kamar.id_cabang')
-                ->select('kamar.*', 'cabang.nama_cabang');
-    return $data;
-}
+	public static function getKamar($request)
+    {
+        $data = Kamar::join('cabang','cabang.id_cabang','=','kamar.id_cabang')
+        ->select('kamar.*','cabang.nama_cabang');
+
+        if (Auth::user()->level == 'Super Admin' && !empty($request->access)) {
+            $data->where('cabang.kode_cabang',$request->access);
+        }else{
+            $data->whereIn('kamar.id_cabang',session('site'));
+        }
+
+        // PERBAIKAN LOGIKA PENCARIAN KEYWORD
+        if (!empty($request->keyword)) {
+            // Ini membungkus orWhere agar tidak bentrok dengan where lain
+            $data->where(function($query) use ($request) {
+                $query->where('kamar.nama_kamar','LIKE','%'.$request->keyword.'%')
+                      ->orWhere('cabang.nama_cabang','LIKE','%'.$request->keyword."%");
+            });
+        }
+
+        if (!empty($request->cabang)) {
+            $data->where('kamar.id_cabang',$request->cabang);
+        }
+
+        // TAMBAHKAN LOGIKA INI UNTUK FILTER STATUS KAMAR
+        if (!empty($request->status_kamar)) {
+            $data->where('kamar.status_kamar', $request->status_kamar);
+        }
+
+        // $data = $data->paginate(15); // <-- BARIS INI YANG DIHAPUS
+        
+        return $data; // Kembalikan $data sebagai Query Builder
+    }
 	// public static function getKamar($request)
 	// {
 	// 	
