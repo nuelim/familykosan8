@@ -13,6 +13,17 @@ class Kamar extends Model
 	// use HasFactory;
 	protected $table = "kamar";
 	protected $primaryKey = "id_kamar";
+    protected $fillable = [
+		'id_cabang',
+		'nama_kamar',
+		'nomor_kamar',
+		'jenis_kamar',
+		'harga_kamar',
+		'keterangan_kamar',
+		'status_kamar', // <-- Pastikan ini ada
+		'created_by',
+		'updated_by'
+	];
 
 	public static function getKamar($request)
     {
